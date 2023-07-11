@@ -76,7 +76,7 @@ class LogInUser implements LogsInUser
         ]);
         
         // authenticate our user with the current application
-        auth()->setUser($user);
+        auth()->login($user, true);
         
         // redirect the user to the home page.
         return redirect()->route('home');

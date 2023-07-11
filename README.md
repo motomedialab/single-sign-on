@@ -1,6 +1,6 @@
 # MotoMediaLab - Single Sign On
 
-A package providing the basic premise for a single sign on system using oAuth2.
+A Laravel package providing the basic premise for a single sign on system using oAuth2.
 This package is perfectly compatible with `laravel/passport`.
 
 ## Installation

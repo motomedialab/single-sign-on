@@ -1,0 +1,36 @@
+{
+    "name": "motomedialab/single-sign-on",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "motomedialab",
+        "single-sign-on",
+        "sso",
+        "laravel"
+    ],
+    "authors": [
+        {
+            "name": "Chris Page",
+            "email": "chris@motocom.co.uk"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.14"
+    },
+    "autoload": {
+        "psr-4": {
+            "Motomedialab\\SingleSignOn\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Motomedialab\\SingleSignOn\\Providers\\SingleSignOnServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

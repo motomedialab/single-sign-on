@@ -2,11 +2,8 @@
 
 namespace Motomedialab\SingleSignOn\Controllers;
 
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Motomedialab\SingleSignOn\Contracts\LogsInUser;
-use Motomedialab\SingleSignOn\Data\AccessToken;
 use Motomedialab\SingleSignOn\Exceptions\OAuthFailedException;
 use Motomedialab\SingleSignOn\Factories\TokenFactory;
 use Throwable;

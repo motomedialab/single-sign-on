@@ -7,7 +7,6 @@ use Illuminate\Contracts\Support\Responsable;
 
 class OAuthFailedException extends Exception implements Responsable
 {
-
     public function toResponse($request)
     {
         abort($this->code, $this->message, [

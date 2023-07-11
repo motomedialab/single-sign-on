@@ -10,8 +10,7 @@ class AccessToken
         public readonly string $accessToken,
         public readonly string $refreshToken,
         public readonly Carbon $expiresAt,
-    )
-    {
+    ) {
         //
     }
 

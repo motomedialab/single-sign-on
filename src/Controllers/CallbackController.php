@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 use Motomedialab\SingleSignOn\Contracts\LogsInUser;
 use Motomedialab\SingleSignOn\Data\AccessToken;
 use Motomedialab\SingleSignOn\Exceptions\OAuthFailedException;
+use Motomedialab\SingleSignOn\Factories\TokenFactory;
 use Throwable;
 
 class CallbackController
@@ -35,27 +36,10 @@ class CallbackController
             new OAuthFailedException('Invalid state parameter', 400)
         );
 
-        // make our request to the token endpoint.
-        $response = Http::asForm()
-            ->post(config('sso.endpoints.token'), [
-                'grant_type' => 'authorization_code',
-                'client_id' => config('sso.client.id'),
-                'client_secret' => config('sso.client.secret'),
-                'redirect_uri' => route('login-sso-callback'),
-                'code' => $request->get('code'),
-            ]);
+        // attempt to get our access token.
+        $token = TokenFactory::getAccessToken($request->get('code'));
 
-        throw_if(
-            $response->failed(),
-            new OAuthFailedException($response->json('error_description', 'Failed to exchange token'), 400)
-        );
-
-        return app()->make(LogsInUser::class)(
-            new AccessToken(
-                accessToken: $response->json('access_token'),
-                refreshToken: $response->json('refresh_token'),
-                expiresAt: now()->addSeconds($response->json('expires_in')),
-            )
-        );
+        // now perform our login action.
+        return app()->make(LogsInUser::class)($token);
     }
 }

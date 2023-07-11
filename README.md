@@ -60,7 +60,8 @@ An example of how this method might look can be seen below:
 
 namespace App\Actions;
 
-use Illuminate\Http\RedirectResponse;use Illuminate\Support\Facades\Http;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Http;
 use MotoMediaLab\SingleSignOn\Contracts\LogsInUser;
 use Motomedialab\SingleSignOn\Data\AccessToken;
 

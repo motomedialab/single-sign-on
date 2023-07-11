@@ -2,7 +2,6 @@
 
 namespace Motomedialab\SingleSignOn\Data;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 
 class AccessToken
@@ -11,7 +10,6 @@ class AccessToken
         public readonly string $accessToken,
         public readonly string $refreshToken,
         public readonly Carbon $expiresAt,
-        public string $scope = ''
     )
     {
         //
@@ -23,7 +21,6 @@ class AccessToken
             'access_token' => $this->accessToken,
             'refresh_token' => $this->refreshToken,
             'expires_at' => $this->expiresAt->toIso8601String(),
-            'scope' => $this->scope,
         ];
     }
 }

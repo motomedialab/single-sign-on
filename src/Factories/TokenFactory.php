@@ -32,7 +32,6 @@ class TokenFactory
             accessToken: $response->json('access_token'),
             refreshToken: $response->json('refresh_token'),
             expiresAt: now()->addSeconds($response->json('expires_in')),
-            scope: config('sso.scopes'),
         );
     }
 
@@ -56,7 +55,6 @@ class TokenFactory
             accessToken: $response->json('access_token'),
             refreshToken: $response->json('refresh_token'),
             expiresAt: now()->addSeconds($response->json('expires_in')),
-            scope: config('sso.scopes'),
         );
     }
 

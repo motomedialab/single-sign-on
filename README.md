@@ -11,6 +11,8 @@ composer require motomedialab/single-sign-on
 
 ## Configuration
 
+### Basic Configuration
+
 Publish the configuration file using the below command:
 
 ```bash
@@ -18,7 +20,7 @@ php artisan vendor:publish --tag=sso-config
 ```
 
 Configure the relevant properties, such as the oAuth2 endpoints, client id and client secret.
-An example can be seen below:
+An example of how this can be represented in your environment file can be seen below:
 
 ```dotenv
 # define the endpoints for our single sign on.
@@ -31,11 +33,22 @@ SSO_OAUTH_CLIENT_SECRET=7oeMatFkmQVMgJOh0dcOuqfaGOxkjqbMC0J45mDk
 SSO_OAUTH_SCOPES="profile"
 ```
 
-## Creating login action
+### SSO Only App Configuration
 
-To complete sign in, the next steps are up to you.
+If you're not authenticating users with anything but the single sign on, you can use the below command to publish the
+packages migrations, which will remove the password field for users, and create a table for storing access tokens.
 
-> You need to define the action that should take place after authentication.
+```bash
+php artisan vendor:publish --tag=sso-migrations && php artisan migrate
+```
+
+Once migrations have been published, you can optionally apply the `Motomedialab\SingleSignOn\Traits\HasSsoToken` to your `User` model.
+This will form a direct relationship between your users and their SSO keys. Remember, this is optional based on your configuration
+and there are some considerations to make when storing SSO keys in your database.
+
+## Creating a login action
+
+To complete sign in, the next steps are up to you. **You need to define the action that should take place after authentication for this to work.**
 
 This can be achieved by creating a new class that implements the
 `MotoMediaLab\SingleSignOn\Contracts\LogsInUser` interface.
@@ -69,11 +82,8 @@ class LogInUser implements LogsInUser
         );
         
         // optionally store the third party access token against the user.
-        $user->accessTokens()->create([
-            'access_token' => $token->accessToken,
-            'refresh_token' => $token->refreshToken,
-            'expires_at' => $token->expiresAt,
-        ]);
+        // the below requires the HasSsoToken trait.
+        $user->setSsoToken($token);
         
         // authenticate our user with the current application
         auth()->login($user, true);

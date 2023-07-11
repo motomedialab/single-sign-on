@@ -10,20 +10,28 @@ class SingleSignOnServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $baseDir = __DIR__ . '/../../';
-        $configFile = $baseDir . 'config/sso.php';
 
         // load our routes.
         $this->loadRoutesFrom($baseDir . 'routes/sso.php');
 
         // create our configuration.
-        $this->mergeConfigFrom($configFile, 'sso');
+        $this->mergeConfigFrom($baseDir . 'config/sso.php', 'sso');
 
-        $this->publishes([
-            $configFile => $this->app->configPath('sso.php'),
-        ], 'sso-config');
+        $this->publishableFiles($baseDir);
 
         // setup any actions.
         $this->bindActions();
+    }
+
+    protected function publishableFiles(string $baseDir): void
+    {
+        $this->publishes([
+            $baseDir . 'config/sso.php' => $this->app->configPath('sso.php'),
+        ], 'sso-config');
+
+        $this->publishes([
+            $baseDir . 'migrations' => $this->app->databasePath('migrations'),
+        ], 'sso-migrations');
     }
 
     protected function bindActions(): void

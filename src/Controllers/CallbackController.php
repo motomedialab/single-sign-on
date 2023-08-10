@@ -24,7 +24,10 @@ class CallbackController
         // check if we had any callback errors.
         throw_if(
             $request->has('error'),
-            new OAuthFailedException($request->get('error_description', $request->get('error')), 400)
+            new OAuthFailedException(
+                $request->get('error_description', $request->get('error')) ?? 'Unknown Reason',
+                400
+            )
         );
 
         // verify our state parameter.

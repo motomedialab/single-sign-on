@@ -51,9 +51,9 @@ and there are some considerations to make when storing SSO keys in your database
 To complete sign in, the next steps are up to you. **You need to define the action that should take place after authentication for this to work.**
 
 This can be achieved by creating a new class that implements the
-`MotoMediaLab\SingleSignOn\Contracts\LogsInUser` interface.
+`MotoMediaLab\SingleSignOn\Contracts\LogsInUser` interface and ensuring it is referenced it within the `config/sso.php` file under `actions.login`.
 
-An example of how this method might look can be seen below:
+An example of how this class might look can be seen below:
 
 ```php
 <?php
@@ -93,3 +93,4 @@ class LogInUser implements LogsInUser
         return redirect()->route('home');
     }
 }
+```
